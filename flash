@@ -1,0 +1,13 @@
+#!/bin/bash
+
+set -euo pipefail
+
+dev=$1
+example=$2
+
+cargo build --release
+cargo objcopy -- -O binary target/thumbv6m-none-eabi/release/"$example"{,.bin}
+./uf2conv.py -c -o target/thumbv6m-none-eabi/release/"$example"{.uf2,.bin}
+sudo mount -o sync /dev/"$dev" /mnt
+sudo cp target/thumbv6m-none-eabi/release/"$example".uf2 /mnt
+sudo umount /mnt
