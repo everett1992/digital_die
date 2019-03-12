@@ -1,0 +1,43 @@
+[package]
+authors = ["Caleb Everett <everett.caleb@gmail.com>"]
+edition = "2018"
+readme = "README.md"
+name = "digital_die"
+version = "0.1.0"
+
+[dependencies]
+cortex-m = "0.5.8"
+cortex-m-rt = "0.6.7"
+cortex-m-semihosting = "0.3.2"
+panic-halt = "0.2.0"
+feather_m0 = "0.2.1"
+embedded-graphics = "^0.4.7"
+embedded-hal = "0.2.2"
+rand_hc = "0.1.0"
+
+[dependencies.rand]
+version = "0.6.5"
+default-features = false
+
+
+[dependencies.ssd1306]
+# I'm working on a feature branch of ssd1306 that supports my ssd1305 display.
+# https://github.com/jamwaffles/ssd1306/issues/76
+path = '../ssd1306'
+# git = "https://github.com/everett1992/ssd1306.git"
+# branch = "my-display"
+# version = "0.2.4"
+
+[[bin]]
+name = "digital_die"
+test = false
+bench = false
+
+[profile.release]
+codegen-units = 1 # better optimizations
+debug = false
+# debug = true # symbols are nice and they don't increase the size on Flash
+lto = true # better optimizations
+
+[features]
+default = [ "feather_m0/unproven"]
