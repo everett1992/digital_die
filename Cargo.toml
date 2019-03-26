@@ -14,19 +14,17 @@ feather_m0 = "0.2.1"
 embedded-graphics = "^0.4.7"
 embedded-hal = "0.2.2"
 rand_hc = "0.1.0"
+ssd1306 = "0.2.4"
 
 [dependencies.rand]
 version = "0.6.5"
 default-features = false
 
 
-[dependencies.ssd1306]
 # I'm working on a feature branch of ssd1306 that supports my ssd1305 display.
 # https://github.com/jamwaffles/ssd1306/issues/76
-path = '../ssd1306'
-# git = "https://github.com/everett1992/ssd1306.git"
-# branch = "my-display"
-# version = "0.2.4"
+[patch.crates-io]
+ssd1306 = { git = "https://github.com/everett1992/ssd1306.git",  branch = "my-display" }
 
 [[bin]]
 name = "digital_die"

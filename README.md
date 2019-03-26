@@ -11,3 +11,27 @@ This is my first hardware project, a 'pocket' calculator for D&D and games that 
 
 You can find significanly cheaper micro controllers and displays, I would shop
 around before building another.
+
+# Dependencies.
+
+This package uses binutils and
+[uf3conv-rs](https://github.com/sajattack/uf2conv-rs), installed via cargo.
+It targets thumbv6-none-eabi. It uses rust stable, 1.33.0.
+
+```
+$ cargo install cargo-binutils
+$ cargo install --git https://github.com/sajattack/uf2conv-rs
+$ rustup target add thumbv6m-none-eabi
+```
+
+The package was setup following the rust [embedded
+book](https://rust-embedded.github.io/book/intro/install.html)
+
+# Build and flash
+
+The flash bash script compiles `digital_die` and creates a uf2 file. It will
+mount and copy the file to the device `$0` then unmount the device.
+
+```
+$ ./flash /dev/sdb
+```

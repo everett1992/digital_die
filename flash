@@ -2,12 +2,20 @@
 
 set -euo pipefail
 
+# Short script to flash the device using uf2 bootloader.
+# $ ./flash /dev/sdb
+
 dev=$1
-example=$2
 
 cargo build --release
-cargo objcopy -- -O binary target/thumbv6m-none-eabi/release/"$example"{,.bin}
-./uf2conv.py -c -o target/thumbv6m-none-eabi/release/"$example"{.uf2,.bin}
-sudo mount -o sync /dev/"$dev" /mnt
-sudo cp target/thumbv6m-none-eabi/release/"$example".uf2 /mnt
+cargo objcopy -- -O binary target/thumbv6m-none-eabi/release/digital_die{,.bin}
+
+~/.cargo/bin/uf2conv-rs \
+  target/thumbv6m-none-eabi/release/digital_die.bin \
+  -o target/thumbv6m-none-eabi/release/digital_die.uf2
+
+sudo mount -o sync "$dev" /mnt
+sudo cp target/thumbv6m-none-eabi/release/digital_die.uf2 /mnt
 sudo umount /mnt
+
+echo "done"
